@@ -20,7 +20,6 @@ class ControlledComponent extends React.Component{
   change = (e) =>{
     console.log('ControlledComponent: ',e.target.value)
     this.setState({value:e.target.value})
-    
   }
 
   click = () =>{
