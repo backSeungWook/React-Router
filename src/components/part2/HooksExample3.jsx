@@ -1,3 +1,4 @@
+//useReducer
 import {useReducer} from "react"
 
 // reducer => state 를 변경하는 로직이 담겨 있는 함수
