@@ -11,6 +11,9 @@ import Login from "./pages/Login"
 import StyledTest from './pages/StyledTest';
 import AntdExample from "./pages/AntdExample";
 import Part2 from "./components/part2/Part2";
+import useWindowWidth from "./hooks/useWindowWidth";
+import withHasMounted from "./hocs/withHasMounted";
+import useHasMounted from "./hooks/useHasMounted";
 
 const styles = `
 button{
@@ -19,8 +22,17 @@ button{
 }
 `;
 
-function App() {
-  
+//HoC {hasMounted}
+function App({hasMounted}) {
+
+  const width = useWindowWidth()
+  const hasMountedFromHooks = useHasMounted()
+
+  console.log('hasMountedFromHooks',hasMountedFromHooks)
+
+  console.log('HOC',hasMounted)
+
+
   return (
       
       <BrowserRouter>
@@ -28,7 +40,7 @@ function App() {
         <Links />
         <NavLinks />
         
-      
+        {width}
         <Switch>  
           <Route path="/login" component={Login}/>
           <Route path="/part2" component={Part2}/>
@@ -51,6 +63,7 @@ function App() {
   );
 }
 
-export default App;
+//HoC
+export default withHasMounted(App);
 
 

@@ -201,16 +201,25 @@ HOC는 컴포넌트를 인자로 받으면 새로운 컴포넌트를 리턴 하�
 ControlledComponent.jsx
 UncontrolledComponent.jsx
 ```
-Controlled : 엘리먼트를 가지고있는 컴포넌트가 관리.  
+`Controlled` : 엘리먼트를 가지고있는 컴포넌트가 관리.  
 ex) 이메일 입력(state 변경) 하는 매 순간 순간 마다 이메일 형식을 확인하는 방식
-Uncontrolled : 엘리먼트의 상태를 관리하지 않고, 엘리먼트의 참조만 컴포넌트가 소유  
+
+`Uncontrolled` : 엘리먼트의 상태를 관리하지 않고, 엘리먼트의 참조만 컴포넌트가 소유  
 React.createRef() 라는 메소드를 사용하여 특정 엘리먼트를 참조 할 수 있다.
+```js
+inputRef = React.createRef()
+...
+click = ()=>{
+  console.log('UncontrolledComponent Click: ',this.inputRef.current.value)
+  this.setState({value:this.inputRef.current.value})
+}
+```
 
 </br>
 
-# Hooks & Context
-- Hooks : 클래스 컴포넌트 에서만 State를 사용하고, 라이프사이클을 사용할수 있었던 부분을 Function 컴포넌트에서도 사용 가능하게 해주며, state를 재사용 할수 있게 해준다  
-- Context : 컴포넌트간의 통신을 위한 API  
+# Hooks 
+`Hooks` : 클래스 컴포넌트 에서만 State를 사용하고, 라이프사이클을 사용할수 있었던 부분을 Function 컴포넌트에서도 사용 가능하게 해주며, state를 재사용 할수 있게 해준다  
+`Hook은 훅 혹은 함수 컴포넌트 안에서만 실행 가능.`
 
 ## Basic Hooks
 최상위(at the Top Level)에서만 Hook을 호출해야 하며, 오직 React 함수 내에서 Hook을 호출해야 한다.  
@@ -219,7 +228,7 @@ React.createRef() 라는 메소드를 사용하여 특정 엘리먼트를 참조
 ```js
 //<HooksExample1>
 export default function  Example1() {
-  const [count,setCount] = React.useState(0)
+  const [count,setCount] = React.useState(0) //0: count 초기값.
   return(
     <div>
         <p>You Clicked {count} times</p>
@@ -258,5 +267,164 @@ React.useEffect(()=>{
 ```
 
 ## Custom Hooks
+```js
+//hooks/useWindowWidth.js
+import {useState, useEffect} from 'react'
+//사용자 정의 Hook
+//화면 크기 변경시 화면 넓이 크기 구하는 Hook
+export default function useWindowWidth(){
+  const [width, setWidth] = useState(window.innerWidth)
 
+  useEffect(() => {
+    const resize = () =>{
+      setWidth(window.innerWidth)
+    }
+    
+    window.addEventListener("resize",resize)
 
+    return() =>{
+      window.removeEventListener("resize",resize)
+    }
+  },[])
+
+  return width
+}
+```
+```js
+//사용법
+const width = useWindowWidth()
+```
+
+## 리액트에서 제공 하는 Hooks
+### `useReducer`
+- 다수의 하위값을 포함하는 복잡한 정적 로직을 만드는 경우
+- 다음 state가 이전 state에 의존적인 경우
+
+```js
+// reducer => state 를 변경하는 로직이 담겨 있는 함수
+const reducer = (state,action) =>{
+  return newState
+}
+// dispatch => action 객체를 넣어서 실행
+// action => 객체, 필수 프로퍼티로 type을 가진다.
+function click() {
+  dispatch({type:"PLUS"})   
+}
+```
+### `useMemo`
+- 초기 값 랜더 후 해당 개체데이터가 변경 시 실행.
+```js
+//input value 변경 시 persons값이 변경이 안되어도 sum이 실행이 됨.
+//const count = sum(persons)
+// => 위 로직 최적화. persons값이 변경이 안되면 초기에만 실행 하고 후에는 실행이 안됨.
+const count = useMemo(()=>{
+  return sum(persons)
+},[persons])
+```
+### `useCallback`
+메모이제이션(memoization)하기 위해서 사용되는 hook 함수
+
+### `useRef`
+다시 랜더링 되어도 동일한 참조값을 유지
+
+## React Router Hooks
+### `useHistory`
+```js
+import { useHistory } from "react-router-dom"
+...
+export default function LoginButton(){
+  const history = useHistory()
+  function login(){
+    setTimeout(() =>{
+      history.push("/")
+    },1000)
+  }
+  return <button onClick={login}>로그인 하기</button>
+}
+```
+### `useParams`
+```js
+import {useParams} from 'react-router'
+...
+//useParams() Hooks 사용
+export default function Profile() {
+  const params = useParams();
+  ...
+}
+```
+
+# Context
+https://ko.reactjs.org/docs/context.html  
+컴포넌트간의 통신을 위한 API  
+`set`: 가장 상위 컴포넌트 -> 프로바이더  
+`1.` 컨텍스트 생성  
+`2.`컨텍스트.프로바이더 사용  
+`3.` value를 사용  
+```js
+//src/contexts/PersonContext.js
+import React from 'react'
+const PersonContext = React.createContext//1. 컨텍스트 생성
+export default PersonContext;
+```
+```js
+//index.js
+
+const persons = [
+  {id:0, name:'Mark', age:39},
+  {id:1, name:'Hanna', age:28}
+]
+//최상위 컴포넌트에 2. 프로바이더 및 3.value
+<PersonContext.Provider value={persons}>
+  <App />
+</PersonContext.Provider>
+```
+`get`: 모든 하위 컴포넌트에서 접근
+- Consumer로 구현
+  ```js
+  <PersonContext.Consumer>
+    {(persons) =>(
+      <ul>
+        {persons.map((person) =>(
+          <li>{person.name}</li>
+        ))}
+      </ul>
+    )}
+  </PersonContext.Consumer>
+  ```
+
+- 클래스 컴포넌트의 this.context
+  ```js
+  import PersonContext from "../../contexts/PersonContext";
+  import React from 'react'
+
+  export default class ContextExample2 extends React.Component {
+    //contextType 하나만 선언 할수 있음.
+    static contextType = PersonContext
+    render(){
+      const persons = this.context
+      return (
+        <ul>
+          {persons.map((person) =>(
+            <li>{person.name}</li>
+          ))}
+        </ul>
+      )
+    }
+  }
+  ```
+- `함수 컴포넌트의 useContext Hook(가장 많이 사용하는 방식)`
+  ```js
+  import PersonContext from "../../contexts/PersonContext";
+  import {useContext} from 'react'
+
+  export default function ContextExample3() {
+    const persons = useContext(PersonContext)
+    return(
+      <ul>
+        {persons.map((person) =>(
+          <li>{person.name}</li>
+        ))}
+      </ul>
+    )
+  }
+  ```

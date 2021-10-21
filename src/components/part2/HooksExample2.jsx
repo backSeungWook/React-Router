@@ -1,4 +1,5 @@
 import React from "react"
+import useWindowWidth from "../../hooks/useWindowWidth"
 /*
 export default class Example2 extends React.Component{
   state = {
@@ -51,6 +52,7 @@ export default function  Example1() {
     return() =>{
       //cleanup
       // componentWillUnmount
+      console.log('componentDidMount2 => componentWillUnmount')
     }
   },[])
 
@@ -62,10 +64,12 @@ export default function  Example1() {
     }
   },[state.count])
 
+  const width = useWindowWidth()
 
   return(
-    <div>
-        <p>You Clicked useState {state.count} times</p>
+    
+     <div>
+        <p>You Clicked useState {state.count} times {width}</p>
         <button onClick={click}>useState</button>
       </div>
   )

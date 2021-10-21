@@ -1,4 +1,5 @@
 import React from "react"
+
 /*
 export default class Example1 extends React.Component{
   state = {
@@ -27,10 +28,10 @@ export default function  Example1() {
   //const [count,setCount] = React.useState(0)
   //==>
   const [state,setState] = React.useState({count:0})
-
+  
   return(
-    <div>
-        <p>You Clicked useState {state.count} times</p>
+    <div >
+        <p>You Clicked useState {state.count}  times</p>
         <button onClick={click}>useState</button>
       </div>
   )
