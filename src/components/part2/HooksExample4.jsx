@@ -1,4 +1,4 @@
-//useReducer
+//useMemo or useCallback
 import {useState,useMemo, useCallback} from "react"
 
 function sum(persons) {
