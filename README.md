@@ -5,7 +5,7 @@
 npm i react-router-dom
 ```
 cra 에 기본 내장된 패키지가 아님.  
-react-router-dom 은 Facebook 의 공식 패키지는 아니며, 가장 대표적인 라우팅 패키지입니다.
+react-router-dom 은 Facebook 의 공식 패키지는 아니며, 가장 대표적인 라우팅 패키지
 
 ## 특정 경로에 보여줄 컴포넌트
 ```js
