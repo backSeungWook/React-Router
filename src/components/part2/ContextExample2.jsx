@@ -8,7 +8,7 @@ export default class ContextExample2 extends React.Component {
     return (
       <ul>
         {persons.map((person) =>(
-          <li>{person.name}</li>
+          <li key={person.id}>{person.name}</li>
         ))}
       </ul>
     )

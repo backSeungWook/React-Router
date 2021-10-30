@@ -3,7 +3,7 @@ import {createRef,useRef,useState} from "react"
 
 
 export default function HooksExample5() {
-  const [value,setValue] = useState('')
+  const [value2,setValue2] = useState('')
   const input1Ref = createRef()
   const input2Ref = useRef()
 
@@ -13,14 +13,14 @@ export default function HooksExample5() {
 
   return(
     <div>
-      <input value={value} onChange={change} />
-      <input type="text" value='createRef()' ref={input1Ref} />
-      <input type="text" ref={input2Ref} value='useRef()'/>
+      <input value={value2} onChange={hookchange} />
+      <input type="text" defaultValue='createRef()' ref={input1Ref} />
+      <input type="text" ref={input2Ref} defaultValue='useRef()'/>
     </div>
   )
 
-  function change(e) {
-    setValue(e.target.value)
+  function hookchange(e) {
+    setValue2(e.target.value)
   }
   
 }
