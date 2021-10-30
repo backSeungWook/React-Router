@@ -6,11 +6,10 @@ export default function ContextExample1() {
       {(persons) =>(
         <ul>
           {persons.map((person) =>(
-            <li>{person.name}</li>
+            <li key={person.id} >{person.name}</li>
           ))}
         </ul>
       )}
     </PersonContext.Consumer>
   )
-  
 }

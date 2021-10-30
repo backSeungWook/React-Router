@@ -9,6 +9,7 @@ import HooksExample5 from "./HooksExample5";
 import ContextExample1 from "./ContextExample1";
 import ContextExample2 from "./ContextExample2";
 import ContextExample3 from "./ContextExample3";
+import Optimizing from "./Optimizing";
 
 
 export default function Part2(){
@@ -29,6 +30,8 @@ export default function Part2(){
       <ContextExample2 />
       함수 컴포넌트의 useContext Hook
       <ContextExample3 />
+      최적화 예제
+      <Optimizing />
     </div>      
   )
 }

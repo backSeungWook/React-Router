@@ -24,7 +24,8 @@ export default function HooksExample4() {
   //
   const click = useCallback(() =>{
     console.log(value)
-  },[])
+  },[value])
+  
 
   return(
     <div>
