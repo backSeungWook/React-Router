@@ -429,7 +429,7 @@ const persons = [
   }
   ```
 
-  # props가 같은 상황에서 랜더 안하는 방법
+  ## props가 같은 상황에서 랜더 안하는 방법
 
   ```js
   const Person = React.memo(({name,age}) => {
