@@ -439,6 +439,5 @@ const persons = [
       </div>
     )
   })
-  ```
-
   
+  ```
