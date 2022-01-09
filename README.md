@@ -59,6 +59,32 @@ import queryString from 'query-string'
 const query = queryString.parse(searchParams)
 console.log('query-string : ',query)//=> {name:123,name2:321}
 ```
+`3.` 기본 props 방식
+```js
+export default function Profile(props) {
+  const id = props.match.params.id;
+  ...
+}
+```
+`4,` react-router useParams() Hooks 사용
+```js
+import {useParams} from 'react-router'
+
+//useParams() Hooks 사용
+export default function Profile() {
+  const params = useParams();
+  //const id = props.match.params.id;
+  const id = params.id;
+  console.log(id, typeof id);
+  return (
+    <div>
+      <h2>Profile 페이지입니다.</h2>
+      {id && <p>id 는 {id} 입니다.</p>}
+    </div>
+  );
+}
+
+```
 
 ## Switch, NotFound
 여러 Route 중 순서대로 먼저 맞는 하나만 보여준다.
